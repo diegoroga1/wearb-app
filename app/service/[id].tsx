@@ -3,49 +3,48 @@ import { router, useLocalSearchParams } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { Screen } from '@/components/Screen';
 import { PrimaryButton } from '@/components/PrimaryButton';
-import { services } from '@/data/mock';
+import { localizeText, services } from '@/data/mock';
 import { colors, radius } from '@/constants/theme';
+import { useI18n } from '@/i18n/provider';
 
 export default function ServiceDetailScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
+  const { t, locale } = useI18n();
   const service = services.find((item) => item.id === id) || services[0];
 
   return (
     <Screen>
       <Image source={{ uri: service.image }} style={styles.image} />
-      <Text style={styles.title}>{service.title}</Text>
+      <Text style={styles.title}>{localizeText(service.title, locale)}</Text>
       <Text style={styles.provider}>{service.provider}</Text>
 
       <View style={styles.stats}>
         <View style={styles.stat}><Ionicons name="star" size={14} color="#F4A340" /><Text style={styles.statText}>{service.rating} ({service.reviews})</Text></View>
-        <View style={styles.stat}><Ionicons name="location-outline" size={14} color={colors.primary} /><Text style={styles.statText}>{service.location}</Text></View>
-        <View style={styles.stat}><Ionicons name="time-outline" size={14} color={colors.primary} /><Text style={styles.statText}>{service.duration}</Text></View>
+        <View style={styles.stat}><Ionicons name="location-outline" size={14} color={colors.primary} /><Text style={styles.statText}>{localizeText(service.location, locale)}</Text></View>
+        <View style={styles.stat}><Ionicons name="time-outline" size={14} color={colors.primary} /><Text style={styles.statText}>{localizeText(service.duration, locale)}</Text></View>
       </View>
 
       <View style={styles.tags}>
-        {service.tags.map((tag) => (
-          <View key={tag} style={styles.tag}><Text style={styles.tagText}>{tag}</Text></View>
+        {service.tags.map((tag, index) => (
+          <View key={index} style={styles.tag}><Text style={styles.tagText}>{localizeText(tag, locale)}</Text></View>
         ))}
       </View>
 
-      <Text style={styles.section}>Descripción</Text>
-      <Text style={styles.description}>{service.description}</Text>
+      <Text style={styles.section}>{t('service.description')}</Text>
+      <Text style={styles.description}>{localizeText(service.description, locale)}</Text>
 
       <View style={styles.box}>
-        <Text style={styles.section}>Incluye</Text>
-        <Text style={styles.description}>• Atención profesional
-• Confirmación rápida
-• Chat con el proveedor
-• Posibilidad de reprogramar</Text>
+        <Text style={styles.section}>{t('service.includes')}</Text>
+        <Text style={styles.description}>{t('service.includesList')}</Text>
       </View>
 
       <View style={styles.priceRow}>
         <View>
           <Text style={styles.price}>€{service.price}</Text>
-          <Text style={styles.priceLabel}>Precio base</Text>
+          <Text style={styles.priceLabel}>{t('common.basePrice')}</Text>
         </View>
         <View style={{ flex: 1, marginLeft: 14 }}>
-          <PrimaryButton label="Reservar ahora" onPress={() => router.push(`/reserve/${service.id}`)} />
+          <PrimaryButton label={t('service.bookNow')} onPress={() => router.push(`/reserve/${service.id}`)} />
         </View>
       </View>
     </Screen>

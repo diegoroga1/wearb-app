@@ -4,24 +4,25 @@ import { router } from 'expo-router';
 import { Screen } from '@/components/Screen';
 import { PrimaryButton } from '@/components/PrimaryButton';
 import { colors, radius } from '@/constants/theme';
-
-const slides = [
-  {
-    title: 'Reserva servicios en minutos',
-    description: 'Encuentra profesionales verificados para belleza, hogar, mascotas, clases y mucho más.',
-  },
-  {
-    title: 'Elige fecha y hora',
-    description: 'Consulta disponibilidad, compara precios y reserva desde el móvil.',
-  },
-  {
-    title: 'Gestiona todo desde la app',
-    description: 'Paga, consulta tus reservas y vuelve a contratar a tus favoritos fácilmente.',
-  },
-];
+import { useI18n } from '@/i18n/provider';
 
 export default function OnboardingScreen() {
+  const { t } = useI18n();
   const [step, setStep] = useState(0);
+  const slides = [
+    {
+      title: t('onboarding.slide1.title'),
+      description: t('onboarding.slide1.description'),
+    },
+    {
+      title: t('onboarding.slide2.title'),
+      description: t('onboarding.slide2.description'),
+    },
+    {
+      title: t('onboarding.slide3.title'),
+      description: t('onboarding.slide3.description'),
+    },
+  ];
   const current = slides[step];
 
   return (
@@ -51,15 +52,15 @@ export default function OnboardingScreen() {
         <View style={styles.actions}>
           {step < slides.length - 1 ? (
             <>
-              <PrimaryButton label="Continuar" onPress={() => setStep((prev) => prev + 1)} />
+              <PrimaryButton label={t('common.continue')} onPress={() => setStep((prev) => prev + 1)} />
               <View style={{ height: 12 }} />
-              <PrimaryButton label="Saltar" variant="secondary" onPress={() => router.replace('/(auth)/login')} />
+              <PrimaryButton label={t('common.skip')} variant="secondary" onPress={() => router.replace('/(auth)/login')} />
             </>
           ) : (
             <>
-              <PrimaryButton label="Empezar" onPress={() => router.replace('/(auth)/login')} />
+              <PrimaryButton label={t('common.start')} onPress={() => router.replace('/(auth)/login')} />
               <View style={{ height: 12 }} />
-              <PrimaryButton label="Crear cuenta" variant="secondary" onPress={() => router.replace('/(auth)/signup')} />
+              <PrimaryButton label={t('common.createAccount')} variant="secondary" onPress={() => router.replace('/(auth)/signup')} />
             </>
           )}
         </View>

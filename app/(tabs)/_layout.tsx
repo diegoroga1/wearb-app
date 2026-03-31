@@ -1,8 +1,11 @@
 import { Ionicons } from '@expo/vector-icons';
 import { Tabs } from 'expo-router';
 import { colors } from '@/constants/theme';
+import { useI18n } from '@/i18n/provider';
 
 export default function TabsLayout() {
+  const { t } = useI18n();
+
   return (
     <Tabs
       screenOptions={({ route }) => ({
@@ -25,10 +28,10 @@ export default function TabsLayout() {
         },
       })}
     >
-      <Tabs.Screen name="index" options={{ title: 'Home' }} />
-      <Tabs.Screen name="search" options={{ title: 'Buscar' }} />
-      <Tabs.Screen name="bookings" options={{ title: 'Reservas' }} />
-      <Tabs.Screen name="profile" options={{ title: 'Perfil' }} />
+      <Tabs.Screen name="index" options={{ title: t('common.home') }} />
+      <Tabs.Screen name="search" options={{ title: t('common.search') }} />
+      <Tabs.Screen name="bookings" options={{ title: t('common.bookings') }} />
+      <Tabs.Screen name="profile" options={{ title: t('common.profile') }} />
     </Tabs>
   );
 }

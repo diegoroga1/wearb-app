@@ -5,21 +5,30 @@ import { Screen } from '@/components/Screen';
 import { ServiceCard } from '@/components/ServiceCard';
 import { services } from '@/data/mock';
 import { colors, radius } from '@/constants/theme';
+import { useI18n } from '@/i18n/provider';
 
 export default function SearchScreen() {
+  const { t } = useI18n();
+  const filters = [
+    t('search.filters.today'),
+    t('search.filters.near'),
+    t('search.filters.topRated'),
+    t('search.filters.home'),
+  ];
+
   return (
     <Screen>
-      <Text style={styles.title}>Buscar servicios</Text>
-      <Text style={styles.subtitle}>Encuentra profesionales según categoría, precio o ubicación.</Text>
+      <Text style={styles.title}>{t('search.title')}</Text>
+      <Text style={styles.subtitle}>{t('search.subtitle')}</Text>
 
       <View style={styles.searchBar}>
         <Ionicons name="search" size={18} color={colors.textMuted} />
-        <TextInput placeholder="Buscar por servicio o profesional" placeholderTextColor={colors.textMuted} style={styles.input} />
+        <TextInput placeholder={t('search.placeholder')} placeholderTextColor={colors.textMuted} style={styles.input} />
         <Ionicons name="options-outline" size={20} color={colors.primary} />
       </View>
 
       <View style={styles.filters}>
-        {['Hoy', 'Cerca de mí', 'Top rated', 'A domicilio'].map((item) => (
+        {filters.map((item) => (
           <View key={item} style={styles.filterChip}><Text style={styles.filterText}>{item}</Text></View>
         ))}
       </View>

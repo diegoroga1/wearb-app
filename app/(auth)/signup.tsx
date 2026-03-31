@@ -3,25 +3,28 @@ import { Link, router } from 'expo-router';
 import { Screen } from '@/components/Screen';
 import { PrimaryButton } from '@/components/PrimaryButton';
 import { colors, radius } from '@/constants/theme';
+import { useI18n } from '@/i18n/provider';
 
 export default function SignupScreen() {
+  const { t } = useI18n();
+
   return (
     <Screen>
-      <Text style={styles.kicker}>Crea tu cuenta</Text>
-      <Text style={styles.title}>Empieza ahora</Text>
-      <Text style={styles.subtitle}>Tanto si reservas como si ofreces servicios, este es tu punto de partida.</Text>
+      <Text style={styles.kicker}>{t('auth.signup.kicker')}</Text>
+      <Text style={styles.title}>{t('auth.signup.title')}</Text>
+      <Text style={styles.subtitle}>{t('auth.signup.subtitle')}</Text>
 
       <View style={styles.form}>
-        <TextInput placeholder="Nombre completo" placeholderTextColor={colors.textMuted} style={styles.input} />
-        <TextInput placeholder="Correo electrónico" placeholderTextColor={colors.textMuted} style={styles.input} />
-        <TextInput placeholder="Teléfono" placeholderTextColor={colors.textMuted} style={styles.input} />
-        <TextInput placeholder="Contraseña" secureTextEntry placeholderTextColor={colors.textMuted} style={styles.input} />
+        <TextInput placeholder={t('auth.signup.name')} placeholderTextColor={colors.textMuted} style={styles.input} />
+        <TextInput placeholder={t('auth.signup.email')} placeholderTextColor={colors.textMuted} style={styles.input} />
+        <TextInput placeholder={t('auth.signup.phone')} placeholderTextColor={colors.textMuted} style={styles.input} />
+        <TextInput placeholder={t('auth.signup.password')} secureTextEntry placeholderTextColor={colors.textMuted} style={styles.input} />
       </View>
 
-      <PrimaryButton label="Crear cuenta" onPress={() => router.replace('/(tabs)')} />
+      <PrimaryButton label={t('common.createAccount')} onPress={() => router.replace('/(tabs)')} />
 
       <Text style={styles.bottomText}>
-        ¿Ya tienes cuenta? <Link href="/(auth)/login" style={styles.link}>Inicia sesión</Link>
+        {t('auth.signup.haveAccount')} <Link href="/(auth)/login" style={styles.link}>{t('common.login')}</Link>
       </Text>
     </Screen>
   );

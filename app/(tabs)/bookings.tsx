@@ -1,17 +1,20 @@
 import { StyleSheet, Text, View } from 'react-native';
 import { Screen } from '@/components/Screen';
 import { colors, radius } from '@/constants/theme';
-
-const bookings = [
-  { id: '1', title: 'Limpieza premium del hogar', date: 'Hoy · 18:00', status: 'Confirmada' },
-  { id: '2', title: 'Corte y peinado a domicilio', date: '12 abril · 10:30', status: 'Pendiente de pago' },
-];
+import { useI18n } from '@/i18n/provider';
+import { localizeText, services } from '@/data/mock';
 
 export default function BookingsScreen() {
+  const { t, locale } = useI18n();
+  const bookings = [
+    { id: '1', title: localizeText(services[0].title, locale), date: t('bookings.today18'), status: t('bookings.confirmed') },
+    { id: '2', title: localizeText(services[1].title, locale), date: t('bookings.april12'), status: t('bookings.pendingPayment') },
+  ];
+
   return (
     <Screen>
-      <Text style={styles.title}>Mis reservas</Text>
-      <Text style={styles.subtitle}>Consulta el estado de tus próximas citas y servicios contratados.</Text>
+      <Text style={styles.title}>{t('bookings.title')}</Text>
+      <Text style={styles.subtitle}>{t('bookings.subtitle')}</Text>
 
       {bookings.map((booking) => (
         <View key={booking.id} style={styles.card}>

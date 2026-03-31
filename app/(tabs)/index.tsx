@@ -4,40 +4,43 @@ import { router } from 'expo-router';
 import { Screen } from '@/components/Screen';
 import { CategoryBubble } from '@/components/CategoryBubble';
 import { ServiceCard } from '@/components/ServiceCard';
-import { categories, services } from '@/data/mock';
+import { categories, localizeText, services } from '@/data/mock';
 import { colors, radius } from '@/constants/theme';
+import { useI18n } from '@/i18n/provider';
 
 export default function HomeScreen() {
+  const { t, locale } = useI18n();
+
   return (
     <Screen>
       <View style={styles.header}>
         <View>
-          <Text style={styles.hello}>Hola, Diego</Text>
-          <Text style={styles.title}>¿Qué servicio necesitas hoy?</Text>
+          <Text style={styles.hello}>{t('home.hello')}</Text>
+          <Text style={styles.title}>{t('home.title')}</Text>
         </View>
         <View style={styles.avatar}><Text style={styles.avatarText}>DR</Text></View>
       </View>
 
       <View style={styles.searchBar}>
         <Ionicons name="search" size={18} color={colors.textMuted} />
-        <TextInput placeholder="Buscar belleza, limpieza, mascotas..." placeholderTextColor={colors.textMuted} style={styles.searchInput} />
+        <TextInput placeholder={t('home.searchPlaceholder')} placeholderTextColor={colors.textMuted} style={styles.searchInput} />
       </View>
 
       <View style={styles.banner}>
-        <Text style={styles.bannerTitle}>Servicios cuando los necesitas</Text>
-        <Text style={styles.bannerText}>Reserva profesionales verificados con pago seguro y atención rápida.</Text>
+        <Text style={styles.bannerTitle}>{t('home.bannerTitle')}</Text>
+        <Text style={styles.bannerText}>{t('home.bannerText')}</Text>
       </View>
 
       <View style={styles.sectionHeader}>
-        <Text style={styles.sectionTitle}>Categorías</Text>
-        <Text style={styles.link}>Ver todas</Text>
+        <Text style={styles.sectionTitle}>{t('common.categories')}</Text>
+        <Text style={styles.link}>{t('common.viewAll')}</Text>
       </View>
 
       <View style={styles.grid}>
         {categories.map((category) => (
           <CategoryBubble
             key={category.id}
-            title={category.name}
+            title={localizeText(category.name, locale)}
             icon={category.icon}
             onPress={() => router.push('/(tabs)/search')}
           />
@@ -45,8 +48,8 @@ export default function HomeScreen() {
       </View>
 
       <View style={styles.sectionHeader}>
-        <Text style={styles.sectionTitle}>Destacados</Text>
-        <Text style={styles.link}>Más servicios</Text>
+        <Text style={styles.sectionTitle}>{t('common.featured')}</Text>
+        <Text style={styles.link}>{t('common.moreServices')}</Text>
       </View>
 
       {services.slice(0, 3).map((service) => (

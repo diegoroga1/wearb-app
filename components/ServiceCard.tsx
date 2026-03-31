@@ -1,7 +1,8 @@
 import { Ionicons } from '@expo/vector-icons';
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import { colors, radius } from '@/constants/theme';
-import { Service } from '@/data/mock';
+import { localizeText, Service } from '@/data/mock';
+import { useI18n } from '@/i18n/provider';
 
 type Props = {
   service: Service;
@@ -9,21 +10,23 @@ type Props = {
 };
 
 export function ServiceCard({ service, onPress }: Props) {
+  const { t, locale } = useI18n();
+
   return (
     <Pressable style={styles.card} onPress={onPress}>
       <Image source={{ uri: service.image }} style={styles.image} />
       <View style={styles.content}>
-        <Text style={styles.title}>{service.title}</Text>
+        <Text style={styles.title}>{localizeText(service.title, locale)}</Text>
         <Text style={styles.provider}>{service.provider}</Text>
         <View style={styles.row}>
           <Ionicons name="star" size={14} color="#F4A340" />
           <Text style={styles.meta}>{service.rating} ({service.reviews})</Text>
           <Text style={styles.dot}>•</Text>
-          <Text style={styles.meta}>{service.location}</Text>
+          <Text style={styles.meta}>{localizeText(service.location, locale)}</Text>
         </View>
         <View style={styles.footer}>
-          <Text style={styles.price}>€{service.price}<Text style={styles.small}> / servicio</Text></Text>
-          <Text style={styles.duration}>{service.duration}</Text>
+          <Text style={styles.price}>€{service.price}<Text style={styles.small}> {t('service.pricePerService')}</Text></Text>
+          <Text style={styles.duration}>{localizeText(service.duration, locale)}</Text>
         </View>
       </View>
     </Pressable>

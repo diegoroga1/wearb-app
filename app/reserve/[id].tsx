@@ -2,22 +2,22 @@ import { StyleSheet, Text, View } from 'react-native';
 import { router, useLocalSearchParams } from 'expo-router';
 import { Screen } from '@/components/Screen';
 import { PrimaryButton } from '@/components/PrimaryButton';
-import { services } from '@/data/mock';
+import { bookingDays, bookingTimes, localizeText, services } from '@/data/mock';
 import { colors, radius } from '@/constants/theme';
-
-const days = ['Lun 8', 'Mar 9', 'Mié 10', 'Jue 11'];
-const times = ['09:00', '10:30', '12:00', '16:00', '18:30'];
+import { useI18n } from '@/i18n/provider';
 
 export default function ReserveScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
+  const { t, locale } = useI18n();
   const service = services.find((item) => item.id === id) || services[0];
+  const days = bookingDays[locale];
 
   return (
     <Screen>
-      <Text style={styles.title}>Reserva tu servicio</Text>
-      <Text style={styles.subtitle}>{service.title}</Text>
+      <Text style={styles.title}>{t('reserve.title')}</Text>
+      <Text style={styles.subtitle}>{localizeText(service.title, locale)}</Text>
 
-      <Text style={styles.section}>Selecciona una fecha</Text>
+      <Text style={styles.section}>{t('reserve.selectDate')}</Text>
       <View style={styles.rowWrap}>
         {days.map((day, index) => (
           <View key={day} style={[styles.choice, index === 1 && styles.choiceActive]}>
@@ -26,9 +26,9 @@ export default function ReserveScreen() {
         ))}
       </View>
 
-      <Text style={styles.section}>Selecciona una hora</Text>
+      <Text style={styles.section}>{t('reserve.selectTime')}</Text>
       <View style={styles.rowWrap}>
-        {times.map((time, index) => (
+        {bookingTimes.map((time, index) => (
           <View key={time} style={[styles.choice, index === 2 && styles.choiceActive]}>
             <Text style={[styles.choiceText, index === 2 && styles.choiceTextActive]}>{time}</Text>
           </View>
@@ -36,14 +36,14 @@ export default function ReserveScreen() {
       </View>
 
       <View style={styles.summary}>
-        <Text style={styles.summaryTitle}>Resumen</Text>
-        <Text style={styles.summaryText}>Servicio: {service.title}</Text>
-        <Text style={styles.summaryText}>Profesional: {service.provider}</Text>
-        <Text style={styles.summaryText}>Duración: {service.duration}</Text>
-        <Text style={styles.summaryText}>Precio base: €{service.price}</Text>
+        <Text style={styles.summaryTitle}>{t('common.summary')}</Text>
+        <Text style={styles.summaryText}>{t('common.service')}: {localizeText(service.title, locale)}</Text>
+        <Text style={styles.summaryText}>{t('common.professional')}: {service.provider}</Text>
+        <Text style={styles.summaryText}>{t('common.duration')}: {localizeText(service.duration, locale)}</Text>
+        <Text style={styles.summaryText}>{t('common.basePrice')}: €{service.price}</Text>
       </View>
 
-      <PrimaryButton label="Continuar al pago" onPress={() => router.push(`/checkout/${service.id}`)} />
+      <PrimaryButton label={t('reserve.continueToPayment')} onPress={() => router.push(`/checkout/${service.id}`)} />
     </Screen>
   );
 }

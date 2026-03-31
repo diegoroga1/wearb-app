@@ -1,39 +1,67 @@
-# Wearb Services App
+# WEARB Services App (Expo)
 
-Proyecto base en **React Native + Expo + Expo Router** para una app de reservas de servicios inspirada en Webel.
+Base mobile app for booking services with **React Native + Expo + Expo Router**.
 
-## Incluye
+## Included flows
 
-- Splash screen personalizado
-- Onboarding / tour de bienvenida
-- Login y signup
-- Home con burbujas de categorías
-- Buscador y listado de servicios
-- Detalle de servicio
-- Reserva de servicio
-- Checkout / compra de reserva
-- Tabs: Home, Buscar, Reservas y Perfil
-- Datos mock para arrancar rápido
+- Splash screen
+- Onboarding / welcome tour
+- Login
+- Sign up
+- Home with category bubbles
+- Search and service listing
+- Service detail
+- Booking flow
+- Checkout flow
+- Bottom tab navigation
+- Profile with language selector
 
-## Ejecutar
+## Languages
+
+The app supports:
+
+- Spanish (`es`)
+- English (`en`)
+- German (`de`)
+
+Behavior:
+
+- Detects the device language on first launch
+- Lets the user switch language from the **Profile** screen
+- Persists the selected language locally with AsyncStorage
+
+## Install
 
 ```bash
 npm install
 npx expo start
 ```
 
-Luego:
+## Open on device or simulator
 
-- pulsa `i` para iOS
-- pulsa `a` para Android
-- o escanea el QR con Expo Go
+```bash
+npx expo start -a   # Android
+npx expo start -i   # iOS
+```
 
-## Siguiente evolución recomendada
+## Main stack
 
-- estado global con Zustand
-- autenticación real
-- backend Laravel / Supabase
-- pagos con Stripe
-- calendario real de disponibilidad
-- filtros avanzados y mapa
-- perfil profesional con publicación de servicios
+- Expo
+- Expo Router
+- React Native
+- TypeScript
+- expo-localization
+- AsyncStorage
+
+## Notes
+
+This is a mock-first starter project prepared to evolve into:
+
+- real authentication
+- roles for customer and professional
+- publishing services
+- live calendar availability
+- Stripe payments
+- chat
+- favorites
+- backend API integration
